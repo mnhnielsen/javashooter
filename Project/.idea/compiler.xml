@@ -9,6 +9,7 @@
         <module name="Javashooter-app" />
         <module name="Javashooter-branding" />
         <module name="Core" />
+        <module name="Common" />
       </profile>
     </annotationProcessing>
   </component>

@@ -62,6 +62,7 @@
         <module>branding</module>
         <module>application</module>
         <module>Core</module>
+        <module>Common</module>
     </modules>
 
     <properties>
