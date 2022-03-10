@@ -9,7 +9,7 @@
     <packaging>pom</packaging>
 
     <name>Javashooter-parent</name>
-
+<!-- -->
     <repositories>
         <!--
         Repository hosting NetBeans modules, especially APIs.
