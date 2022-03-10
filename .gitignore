@@ -17,3 +17,4 @@ buildNumber.properties
 .DS_Store
 *.jar
 /*/runner/
+Project/.idea/encodings.xml
