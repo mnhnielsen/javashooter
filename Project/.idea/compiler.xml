@@ -8,6 +8,7 @@
         <outputRelativeToContentRoot value="true" />
         <module name="Javashooter-app" />
         <module name="Javashooter-branding" />
+        <module name="Core" />
       </profile>
     </annotationProcessing>
   </component>

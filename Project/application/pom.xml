@@ -20,22 +20,33 @@
 
     <dependencies>
         <dependency>
-            <groupId>org.netbeans.cluster</groupId>
-            <artifactId>platform</artifactId>
+            <groupId>org.netbeans.modules</groupId>
+            <artifactId>org-netbeans-core-startup</artifactId>
             <version>${netbeans.version}</version>
-            <type>pom</type>
         </dependency>
+        <!-- OSGi integration -->
         <dependency>
-            <groupId>${project.groupId}</groupId>
-            <artifactId>Javashooter-branding</artifactId>
-            <version>${project.version}</version>
+            <groupId>org.netbeans.api</groupId>
+            <artifactId>org-netbeans-core-netigso</artifactId>
+            <version>${netbeans.version}</version>
         </dependency>
-        <!-- NbModuleSuite functional in RELEASE70 or later: -->
+        <!-- Equinox integration -->
+        <dependency>
+            <groupId>org.netbeans.api</groupId>
+            <artifactId>org-netbeans-modules-netbinox</artifactId>
+            <version>${netbeans.version}</version>
+        </dependency>
         <dependency>
             <groupId>org.netbeans.api</groupId>
             <artifactId>org-netbeans-modules-nbjunit</artifactId>
             <version>${netbeans.version}</version>
-            <scope>test</scope> <!-- beyond platform cluster, this often needs to be dropped down to compile/runtime, some other modules in IDE clusters depend on it -->
+            <scope>test</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>${project.groupId}</groupId>
+            <artifactId>Core</artifactId>
+            <version>${project.version}</version>
         </dependency>
         <!-- To use Jelly Tools in your functional tests, add or replace with:
         <dependency>

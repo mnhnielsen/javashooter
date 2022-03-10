@@ -61,10 +61,11 @@
     <modules>
         <module>branding</module>
         <module>application</module>
+        <module>Core</module>
     </modules>
 
     <properties>
-        <netbeans.version>RELEASE110</netbeans.version>
+        <netbeans.version>RELEASE112</netbeans.version>
         <brandingToken>javashooter</brandingToken>
     </properties>
 </project>
