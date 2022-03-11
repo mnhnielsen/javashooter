@@ -7,11 +7,14 @@
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
         <module name="Javashooter-app" />
+        <module name="Player" />
         <module name="Javashooter-branding" />
-        <module name="Updater" />
         <module name="Core" />
         <module name="Common" />
       </profile>
     </annotationProcessing>
+    <bytecodeTargetLevel>
+      <module name="Updater" target="1.8" />
+    </bytecodeTargetLevel>
   </component>
 </project>
