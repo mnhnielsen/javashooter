@@ -1,3 +1,2 @@
 Manifest-Version: 1.0
-OpenIDE-Module-Install: org/example/Installer.class
-OpenIDE-Module-Localizing-Bundle: org/example/Bundle.properties
+OpenIDE-Module-Localizing-Bundle: org/example/player/Bundle.properties

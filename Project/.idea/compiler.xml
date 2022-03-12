@@ -6,15 +6,12 @@
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
-        <module name="Javashooter-app" />
         <module name="Player" />
-        <module name="Javashooter-branding" />
-        <module name="Core" />
+        <module name="Project-app" />
+        <module name="Project-branding" />
         <module name="Common" />
+        <module name="Core" />
       </profile>
     </annotationProcessing>
-    <bytecodeTargetLevel>
-      <module name="Updater" target="1.8" />
-    </bytecodeTargetLevel>
   </component>
 </project>

@@ -4,14 +4,14 @@
     <modelVersion>4.0.0</modelVersion>
     <parent>
         <groupId>org.example</groupId>
-        <artifactId>Javashooter-parent</artifactId>
+        <artifactId>Project-parent</artifactId>
         <version>1.0-SNAPSHOT</version>
     </parent>
 
-    <artifactId>Javashooter-app</artifactId>
+    <artifactId>Project-app</artifactId>
     <packaging>nbm-application</packaging>
 
-    <name>Javashooter-app</name>
+    <name>Project-app</name>
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -20,37 +20,22 @@
 
     <dependencies>
         <dependency>
-            <groupId>org.netbeans.api</groupId>
-            <artifactId>org-netbeans-modules-autoupdate-ui</artifactId>
+            <groupId>org.netbeans.cluster</groupId>
+            <artifactId>platform</artifactId>
             <version>${netbeans.version}</version>
+            <type>pom</type>
         </dependency>
         <dependency>
-            <groupId>org.netbeans.modules</groupId>
-            <artifactId>org-netbeans-core-windows</artifactId>
-            <version>${netbeans.version}</version>
+            <groupId>${project.groupId}</groupId>
+            <artifactId>Project-branding</artifactId>
+            <version>${project.version}</version>
         </dependency>
-        <dependency>
-            <groupId>org.netbeans.modules</groupId>
-            <artifactId>org-netbeans-core-startup</artifactId>
-            <version>${netbeans.version}</version>
-        </dependency>
-        <!-- OSGi integration -->
-        <dependency>
-            <groupId>org.netbeans.api</groupId>
-            <artifactId>org-netbeans-core-netigso</artifactId>
-            <version>${netbeans.version}</version>
-        </dependency>
-        <!-- Equinox integration -->
-        <dependency>
-            <groupId>org.netbeans.api</groupId>
-            <artifactId>org-netbeans-modules-netbinox</artifactId>
-            <version>${netbeans.version}</version>
-        </dependency>
+        <!-- NbModuleSuite functional in RELEASE70 or later: -->
         <dependency>
             <groupId>org.netbeans.api</groupId>
             <artifactId>org-netbeans-modules-nbjunit</artifactId>
             <version>${netbeans.version}</version>
-            <scope>test</scope>
+            <scope>test</scope> <!-- beyond platform cluster, this often needs to be dropped down to compile/runtime, some other modules in IDE clusters depend on it -->
         </dependency>
         <!-- To use Jelly Tools in your functional tests, add or replace with:
         <dependency>
