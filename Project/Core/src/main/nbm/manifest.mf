@@ -1,2 +1,2 @@
 Manifest-Version: 1.0
-OpenIDE-Module-Localizing-Bundle: org/example/core/Bundle.properties
+OpenIDE-Module-Install: org/example/core/Installer.class

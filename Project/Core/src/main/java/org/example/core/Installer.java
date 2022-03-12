@@ -7,6 +7,9 @@ import org.openide.modules.ModuleInstall;
 public class Installer extends ModuleInstall
 {
     private static Game g;
+    public Installer(){
+        restored();
+    }
 
     @Override
     public void restored() {
