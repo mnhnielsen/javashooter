@@ -16,6 +16,8 @@
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <all.clusters>${project.build.directory}/${brandingToken}</all.clusters>
+        <netbeans.run.params.ide/>
+        <netbeans.run.params>${netbeans.run.params.ide}  -J-agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=localhost:5005 --nosplash</netbeans.run.params>
     </properties>
 
     <dependencies>
@@ -45,9 +47,27 @@
             <scope>test</scope>
         </dependency>
         -->
-        <dependency>
+        <!-- This dependency should be enabled when deploying-->
+        <!--<dependency>
             <groupId>${project.groupId}</groupId>
             <artifactId>SilentUpdate</artifactId>
+            <version>${project.version}</version>
+        </dependency>-->
+        <dependency>
+            <groupId>${project.groupId}</groupId>
+            <artifactId>Core</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+
+        <!-- These dependencies should be disabled when deploying-->
+        <dependency>
+            <groupId>${project.groupId}</groupId>
+            <artifactId>Common</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>${project.groupId}</groupId>
+            <artifactId>Player</artifactId>
             <version>${project.version}</version>
         </dependency>
     </dependencies>

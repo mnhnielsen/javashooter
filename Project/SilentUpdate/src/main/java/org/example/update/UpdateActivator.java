@@ -11,6 +11,7 @@ public class UpdateActivator extends ModuleInstall
     @Override
     public void restored() {
         exector.scheduleAtFixedRate(doCheck, 5000, 5000, TimeUnit.MILLISECONDS);
+        System.out.println("test");
     }
 
     private static final Runnable doCheck = new Runnable() {
