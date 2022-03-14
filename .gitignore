@@ -18,3 +18,4 @@ buildNumber.properties
 *.jar
 /*/runner/
 Project/.idea/encodings.xml
+Project/.idea/misc.xml
