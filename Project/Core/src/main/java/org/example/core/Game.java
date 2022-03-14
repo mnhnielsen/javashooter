@@ -77,6 +77,8 @@ public class Game implements ApplicationListener
         // clear screen to black
         //Gdx.gl.glClearColor(0, 0, 0, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+        Gdx.gl.glActiveTexture(GL20.GL_TEXTURE0);
+
         spriteBatch.begin();
         renderBackground();
         spriteBatch.end();
@@ -101,7 +103,7 @@ public class Game implements ApplicationListener
 
     private void draw() {
         for (Entity entity : world.getEntities()) {
-            sr.setColor(1, 1, 1, 1);
+            sr.setColor(255, 0, 0, 1);
 
             sr.begin(ShapeRenderer.ShapeType.Line);
 

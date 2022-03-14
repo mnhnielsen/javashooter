@@ -65,6 +65,8 @@
         <module>Player</module>
         <module>Core</module>
         <module>SilentUpdate</module>
+        <module>Bullet</module>
+        <module>CommonBullet</module>
     </modules>
 
     <properties>

@@ -8,6 +8,8 @@ import org.example.common.data.entityparts.LifePart;
 import org.example.common.data.entityparts.MovingPart;
 import org.example.common.data.entityparts.PositionPart;
 import org.example.common.services.IEntityProcessingService;
+import org.example.commonbullet.BulletSPI;
+import org.openide.util.Lookup;
 import org.openide.util.lookup.ServiceProvider;
 import org.openide.util.lookup.ServiceProviders;
 
@@ -30,7 +32,10 @@ public class PlayerControlSystem implements IEntityProcessingService
             movingPart.setUp(gameData.getKeys().isDown(GameKeys.UP));
 
             if (gameData.getKeys().isDown(GameKeys.SPACE))
-                System.out.println("Shooting");
+            {
+                Entity bullet = Lookup.getDefault().lookup(BulletSPI.class).createBullet(player, gameData);
+                world.addEntity(bullet);
+            }
 
             movingPart.process(gameData, player);
             positionPart.process(gameData, player);
