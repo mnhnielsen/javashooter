@@ -15,8 +15,8 @@ public class Installer extends ModuleInstall
 
         LwjglApplicationConfiguration cfg = new LwjglApplicationConfiguration();
         cfg.title = "Asteroids";
-        cfg.width = 800;
-        cfg.height = 600;
+        cfg.width = 600;
+        cfg.height = 400;
         cfg.useGL30 = false;
         cfg.resizable = false;
 

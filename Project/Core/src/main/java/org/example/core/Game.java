@@ -4,6 +4,9 @@ import com.badlogic.gdx.ApplicationListener;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.Sprite;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import org.example.common.data.Entity;
 import org.example.common.data.GameData;
@@ -29,9 +32,24 @@ public class Game implements ApplicationListener
     private World world = new World();
     private List<IGamePluginService> gamePlugins = new CopyOnWriteArrayList<>();
     private Lookup.Result<IGamePluginService> result;
+    public static Texture backgroundTexture;
+    public static Sprite backgroundSprite;
+    private SpriteBatch spriteBatch;
+
+    private void loadTextures() {
+        backgroundTexture = new Texture("/home/mathias/Documents/Projects/Semester4/javashooter/Project/CurrencyObtainRight.png");
+        backgroundSprite =new Sprite(backgroundTexture);
+        spriteBatch = new SpriteBatch();
+    }
+
+    public void renderBackground() {
+
+        backgroundSprite.draw(spriteBatch);
+    }
 
     @Override
     public void create() {
+        loadTextures();
         gameData.setDisplayWidth(Gdx.graphics.getWidth());
         gameData.setDisplayHeight(Gdx.graphics.getHeight());
 
@@ -51,17 +69,20 @@ public class Game implements ApplicationListener
             plugin.start(gameData, world);
             gamePlugins.add(plugin);
         }
+
     }
 
     @Override
     public void render() {
         // clear screen to black
-        Gdx.gl.glClearColor(0, 0, 0, 1);
+        //Gdx.gl.glClearColor(0, 0, 0, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+        spriteBatch.begin();
+        renderBackground();
+        spriteBatch.end();
 
         gameData.setDelta(Gdx.graphics.getDeltaTime());
         gameData.getKeys().update();
-
         update();
         draw();
     }
