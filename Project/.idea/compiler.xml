@@ -6,10 +6,12 @@
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
+        <module name="Bullet" />
         <module name="Player" />
         <module name="SilentUpdate" />
-        <module name="Project-app" />
         <module name="Project-branding" />
+        <module name="CommonBullet" />
+        <module name="Project-app" />
         <module name="Common" />
         <module name="Core" />
       </profile>

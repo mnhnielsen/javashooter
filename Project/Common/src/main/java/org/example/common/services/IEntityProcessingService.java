@@ -6,4 +6,5 @@ import org.example.common.data.World;
 public interface IEntityProcessingService
 {
     void process(GameData gameData, World world);
+
 }

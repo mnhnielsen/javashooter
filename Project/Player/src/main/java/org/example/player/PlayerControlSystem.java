@@ -1,5 +1,8 @@
 package org.example.player;
 
+import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.Sprite;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import org.example.common.data.Entity;
 import org.example.common.data.GameData;
 import org.example.common.data.GameKeys;
@@ -13,11 +16,29 @@ import org.openide.util.Lookup;
 import org.openide.util.lookup.ServiceProvider;
 import org.openide.util.lookup.ServiceProviders;
 
+
 @ServiceProviders(value = {
         @ServiceProvider(service = IEntityProcessingService.class)
 })
 public class PlayerControlSystem implements IEntityProcessingService
 {
+
+    public static Texture backgroundTexture;
+    public static Sprite backgroundSprite;
+    private SpriteBatch spriteBatch;
+
+    private void loadTextures() {
+        backgroundTexture = new Texture("/home/mathias/Documents/Projects/Semester4/javashooter/Project/man.png");
+        backgroundSprite =new Sprite(backgroundTexture);
+        spriteBatch = new SpriteBatch();
+    }
+
+    public void renderBackground()
+    {
+
+        backgroundSprite.draw(spriteBatch);
+    }
+
     @Override
     public void process(GameData gameData, World world)
     {
@@ -30,6 +51,8 @@ public class PlayerControlSystem implements IEntityProcessingService
             movingPart.setLeft(gameData.getKeys().isDown(GameKeys.LEFT));
             movingPart.setRight(gameData.getKeys().isDown(GameKeys.RIGHT));
             movingPart.setUp(gameData.getKeys().isDown(GameKeys.UP));
+            movingPart.setDeceleration(100f);
+
 
             if (gameData.getKeys().isDown(GameKeys.SPACE))
             {
@@ -41,12 +64,14 @@ public class PlayerControlSystem implements IEntityProcessingService
             positionPart.process(gameData, player);
             lifePart.process(gameData, player);
             updateShape(player);
-
+            loadTextures();
+            renderBackground();
         }
     }
 
     private void updateShape(Entity entity)
     {
+        /*
         float[] shapex = new float[4];
         float[] shapey = new float[4];
         PositionPart positionPart = entity.getPart(PositionPart.class);
@@ -68,5 +93,7 @@ public class PlayerControlSystem implements IEntityProcessingService
 
         entity.setShapeX(shapex);
         entity.setShapeY(shapey);
+
+         */
     }
 }
