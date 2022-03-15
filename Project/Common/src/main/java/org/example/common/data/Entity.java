@@ -1,5 +1,6 @@
 package org.example.common.data;
 
+import com.badlogic.gdx.graphics.Texture;
 import org.example.common.data.entityparts.EntityPart;
 
 import java.io.Serializable;
@@ -13,6 +14,28 @@ public class Entity
 
     private float[] shapeX = new float[4];
     private float[] shapeY = new float[4];
+
+    public Texture getTexture()
+    {
+        return texture;
+    }
+
+    public void setTexture(Texture texture)
+    {
+        this.texture = texture;
+    }
+
+    public Map<Class, EntityPart> getParts()
+    {
+        return parts;
+    }
+
+    public void setParts(Map<Class, EntityPart> parts)
+    {
+        this.parts = parts;
+    }
+
+    private Texture texture;
     private float radius;
     private Map<Class, EntityPart> parts;
 
@@ -51,6 +74,7 @@ public class Entity
     public void setShapeX(float[] shapeX) {
         this.shapeX = shapeX;
     }
+
 
     public float[] getShapeY() {
         return shapeY;

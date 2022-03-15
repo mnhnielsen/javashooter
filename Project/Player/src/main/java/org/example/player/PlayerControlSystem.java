@@ -1,5 +1,6 @@
 package org.example.player;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -11,6 +12,7 @@ import org.example.common.data.entityparts.LifePart;
 import org.example.common.data.entityparts.MovingPart;
 import org.example.common.data.entityparts.PositionPart;
 import org.example.common.services.IEntityProcessingService;
+import org.example.common.services.IPlayerService;
 import org.example.commonbullet.BulletSPI;
 import org.openide.util.Lookup;
 import org.openide.util.lookup.ServiceProvider;
@@ -20,24 +22,11 @@ import org.openide.util.lookup.ServiceProviders;
 @ServiceProviders(value = {
         @ServiceProvider(service = IEntityProcessingService.class)
 })
-public class PlayerControlSystem implements IEntityProcessingService
+public class PlayerControlSystem implements IEntityProcessingService, IPlayerService
 {
 
-    public static Texture backgroundTexture;
-    public static Sprite backgroundSprite;
-    private SpriteBatch spriteBatch;
 
-    private void loadTextures() {
-        backgroundTexture = new Texture("/home/mathias/Documents/Projects/Semester4/javashooter/Project/man.png");
-        backgroundSprite =new Sprite(backgroundTexture);
-        spriteBatch = new SpriteBatch();
-    }
 
-    public void renderBackground()
-    {
-
-        backgroundSprite.draw(spriteBatch);
-    }
 
     @Override
     public void process(GameData gameData, World world)
@@ -54,6 +43,8 @@ public class PlayerControlSystem implements IEntityProcessingService
             movingPart.setDeceleration(100f);
 
 
+
+
             if (gameData.getKeys().isDown(GameKeys.SPACE))
             {
                 Entity bullet = Lookup.getDefault().lookup(BulletSPI.class).createBullet(player, gameData);
@@ -63,16 +54,21 @@ public class PlayerControlSystem implements IEntityProcessingService
             movingPart.process(gameData, player);
             positionPart.process(gameData, player);
             lifePart.process(gameData, player);
-            updateShape(player);
-            loadTextures();
-            renderBackground();
+
         }
+    }
+
+    @Override
+    public void playerprocess(GameData gameData, World world)
+    {
+
+
     }
 
     private void updateShape(Entity entity)
     {
-        /*
-        float[] shapex = new float[4];
+
+        /*float[] shapex = new float[4];
         float[] shapey = new float[4];
         PositionPart positionPart = entity.getPart(PositionPart.class);
         float x = positionPart.getX();
@@ -95,5 +91,9 @@ public class PlayerControlSystem implements IEntityProcessingService
         entity.setShapeY(shapey);
 
          */
+
+
+
+
     }
 }

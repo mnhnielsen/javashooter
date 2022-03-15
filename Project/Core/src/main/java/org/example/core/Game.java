@@ -13,6 +13,7 @@ import org.example.common.data.GameData;
 import org.example.common.data.World;
 import org.example.common.services.IEntityProcessingService;
 import org.example.common.services.IGamePluginService;
+import org.example.common.services.IPlayerService;
 import org.example.common.services.IPostEntityProcessingService;
 import org.example.managers.GameInputProcessor;
 import org.openide.util.Lookup;
@@ -35,9 +36,12 @@ public class Game implements ApplicationListener
     public static Texture backgroundTexture;
     public static Sprite backgroundSprite;
     private SpriteBatch spriteBatch;
+    private static Sprite sprite;
 
     private void loadTextures() {
         backgroundTexture = new Texture("/home/mathias/Documents/Projects/Semester4/javashooter/Project/CurrencyObtainRight.png");
+        sprite = new Sprite(new Texture(Gdx.files.internal("/home/mathias/Documents/Projects/Semester4/javashooter/Project/man.png")));
+
         backgroundSprite =new Sprite(backgroundTexture);
         spriteBatch = new SpriteBatch();
     }
@@ -45,6 +49,8 @@ public class Game implements ApplicationListener
     public void renderBackground() {
 
         backgroundSprite.draw(spriteBatch);
+        sprite.draw(spriteBatch);
+
     }
 
     @Override
@@ -72,23 +78,6 @@ public class Game implements ApplicationListener
 
     }
 
-    @Override
-    public void render() {
-        // clear screen to black
-        //Gdx.gl.glClearColor(0, 0, 0, 1);
-        Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-        Gdx.gl.glActiveTexture(GL20.GL_TEXTURE0);
-
-        spriteBatch.begin();
-        renderBackground();
-        spriteBatch.end();
-
-        gameData.setDelta(Gdx.graphics.getDeltaTime());
-        gameData.getKeys().update();
-        update();
-        draw();
-    }
-
     private void update() {
         // Update
         for (IEntityProcessingService entityProcessorService : getEntityProcessingServices()) {
@@ -99,7 +88,32 @@ public class Game implements ApplicationListener
         for (IPostEntityProcessingService postEntityProcessorService : getPostEntityProcessingServices()) {
             postEntityProcessorService.process(gameData, world);
         }
+
+        for (IPlayerService playerService : getPlayerProcessingServices()){
+            playerService.playerprocess(gameData,world);
+        }
     }
+
+    @Override
+    public void render() {
+        // clear screen to black
+        //Gdx.gl.glClearColor(0, 0, 0, 1);
+        Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+        Gdx.gl.glActiveTexture(GL20.GL_TEXTURE0);
+
+        spriteBatch.begin();
+        renderBackground();
+        update();
+        spriteBatch.end();
+
+        gameData.setDelta(Gdx.graphics.getDeltaTime());
+        gameData.getKeys().update();
+
+        draw();
+
+    }
+
+
 
     private void draw() {
         for (Entity entity : world.getEntities()) {
@@ -141,6 +155,9 @@ public class Game implements ApplicationListener
         return lookup.lookupAll(IEntityProcessingService.class);
     }
 
+    private Collection<? extends IPlayerService> getPlayerProcessingServices() {
+        return lookup.lookupAll(IPlayerService.class);
+    }
     private Collection<? extends IPostEntityProcessingService> getPostEntityProcessingServices() {
         return lookup.lookupAll(IPostEntityProcessingService.class);
     }
