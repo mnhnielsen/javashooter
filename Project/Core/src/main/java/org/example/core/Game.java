@@ -2,6 +2,7 @@ package org.example.core;
 
 import com.badlogic.gdx.ApplicationListener;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
@@ -15,11 +16,19 @@ import org.example.common.services.IEntityProcessingService;
 import org.example.common.services.IGamePluginService;
 import org.example.common.services.IPlayerService;
 import org.example.common.services.IPostEntityProcessingService;
+import org.example.managers.AssetsJarFileResolver;
 import org.example.managers.GameInputProcessor;
+import org.example.managers.JarFileHandleStream;
 import org.openide.util.Lookup;
 import org.openide.util.LookupEvent;
 import org.openide.util.LookupListener;
 
+import java.io.File;
+import java.io.IOException;
+import java.net.URISyntaxException;
+import java.net.URL;
+
+import java.io.File;
 import java.util.Collection;
 import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
@@ -38,15 +47,18 @@ public class Game implements ApplicationListener
     private SpriteBatch spriteBatch;
     private static Sprite sprite;
 
-    private void loadTextures() {
-        backgroundTexture = new Texture("/home/mathias/Documents/Projects/Semester4/javashooter/Project/CurrencyObtainRight.png");
-        sprite = new Sprite(new Texture(Gdx.files.internal("/home/mathias/Documents/Projects/Semester4/javashooter/Project/man.png")));
 
-        backgroundSprite =new Sprite(backgroundTexture);
+    private void loadTextures()
+    {
+        backgroundTexture = new Texture("/home/mathias/Documents/Projects/Semester4/javashooter/Project/CurrencyObtainRight.png");
+        sprite = new Sprite(new Texture("/home/mathias/Documents/Projects/Semester4/javashooter/Project/man.png"));
+
+        backgroundSprite = new Sprite(backgroundTexture,Gdx.graphics.getWidth(),Gdx.graphics.getHeight());
         spriteBatch = new SpriteBatch();
     }
 
-    public void renderBackground() {
+    public void renderBackground()
+    {
 
         backgroundSprite.draw(spriteBatch);
         sprite.draw(spriteBatch);
@@ -54,7 +66,9 @@ public class Game implements ApplicationListener
     }
 
     @Override
-    public void create() {
+    public void create()
+    {
+
         loadTextures();
         gameData.setDisplayWidth(Gdx.graphics.getWidth());
         gameData.setDisplayHeight(Gdx.graphics.getHeight());
@@ -71,31 +85,37 @@ public class Game implements ApplicationListener
         result.addLookupListener(lookupListener);
         result.allItems();
 
-        for (IGamePluginService plugin : result.allInstances()) {
+        for (IGamePluginService plugin : result.allInstances())
+        {
             plugin.start(gameData, world);
             gamePlugins.add(plugin);
         }
 
     }
 
-    private void update() {
+    private void update()
+    {
         // Update
-        for (IEntityProcessingService entityProcessorService : getEntityProcessingServices()) {
+        for (IEntityProcessingService entityProcessorService : getEntityProcessingServices())
+        {
             entityProcessorService.process(gameData, world);
         }
 
         // Post Update
-        for (IPostEntityProcessingService postEntityProcessorService : getPostEntityProcessingServices()) {
+        for (IPostEntityProcessingService postEntityProcessorService : getPostEntityProcessingServices())
+        {
             postEntityProcessorService.process(gameData, world);
         }
 
-        for (IPlayerService playerService : getPlayerProcessingServices()){
-            playerService.playerprocess(gameData,world);
+        for (IPlayerService playerService : getPlayerProcessingServices())
+        {
+            playerService.playerprocess(gameData, world);
         }
     }
 
     @Override
-    public void render() {
+    public void render()
+    {
         // clear screen to black
         //Gdx.gl.glClearColor(0, 0, 0, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
@@ -114,9 +134,10 @@ public class Game implements ApplicationListener
     }
 
 
-
-    private void draw() {
-        for (Entity entity : world.getEntities()) {
+    private void draw()
+    {
+        for (Entity entity : world.getEntities())
+        {
             sr.setColor(255, 0, 0, 1);
 
             sr.begin(ShapeRenderer.ShapeType.Line);
@@ -126,7 +147,8 @@ public class Game implements ApplicationListener
 
             for (int i = 0, j = shapex.length - 1;
                  i < shapex.length;
-                 j = i++) {
+                 j = i++)
+            {
 
                 sr.line(shapex[i], shapey[i], shapex[j], shapey[j]);
             }
@@ -136,49 +158,63 @@ public class Game implements ApplicationListener
     }
 
     @Override
-    public void resize(int width, int height) {
+    public void resize(int width, int height)
+    {
     }
 
     @Override
-    public void pause() {
+    public void pause()
+    {
     }
 
     @Override
-    public void resume() {
+    public void resume()
+    {
     }
 
     @Override
-    public void dispose() {
+    public void dispose()
+    {
     }
 
-    private Collection<? extends IEntityProcessingService> getEntityProcessingServices() {
+    private Collection<? extends IEntityProcessingService> getEntityProcessingServices()
+    {
         return lookup.lookupAll(IEntityProcessingService.class);
     }
 
-    private Collection<? extends IPlayerService> getPlayerProcessingServices() {
+    private Collection<? extends IPlayerService> getPlayerProcessingServices()
+    {
         return lookup.lookupAll(IPlayerService.class);
     }
-    private Collection<? extends IPostEntityProcessingService> getPostEntityProcessingServices() {
+
+    private Collection<? extends IPostEntityProcessingService> getPostEntityProcessingServices()
+    {
         return lookup.lookupAll(IPostEntityProcessingService.class);
     }
 
-    private final LookupListener lookupListener = new LookupListener() {
+    private final LookupListener lookupListener = new LookupListener()
+    {
         @Override
-        public void resultChanged(LookupEvent le) {
+        public void resultChanged(LookupEvent le)
+        {
 
             Collection<? extends IGamePluginService> updated = result.allInstances();
 
-            for (IGamePluginService us : updated) {
+            for (IGamePluginService us : updated)
+            {
                 // Newly installed modules
-                if (!gamePlugins.contains(us)) {
+                if (!gamePlugins.contains(us))
+                {
                     us.start(gameData, world);
                     gamePlugins.add(us);
                 }
             }
 
             // Stop and remove module
-            for (IGamePluginService gs : gamePlugins) {
-                if (!updated.contains(gs)) {
+            for (IGamePluginService gs : gamePlugins)
+            {
+                if (!updated.contains(gs))
+                {
                     gs.stop(gameData, world);
                     gamePlugins.remove(gs);
                 }

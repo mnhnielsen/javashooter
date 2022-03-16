@@ -42,9 +42,6 @@ public class PlayerControlSystem implements IEntityProcessingService, IPlayerSer
             movingPart.setUp(gameData.getKeys().isDown(GameKeys.UP));
             movingPart.setDeceleration(100f);
 
-
-
-
             if (gameData.getKeys().isDown(GameKeys.SPACE))
             {
                 Entity bullet = Lookup.getDefault().lookup(BulletSPI.class).createBullet(player, gameData);
