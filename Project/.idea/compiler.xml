@@ -9,7 +9,9 @@
         <module name="Bullet" />
         <module name="Player" />
         <module name="SilentUpdate" />
+        <module name="Javashooter-branding" />
         <module name="Project-branding" />
+        <module name="Javashooter-app" />
         <module name="CommonBullet" />
         <module name="Project-app" />
         <module name="Common" />

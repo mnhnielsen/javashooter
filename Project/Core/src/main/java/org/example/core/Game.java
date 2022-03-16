@@ -37,7 +37,7 @@ public class Game implements ApplicationListener
     private SpriteBatch spriteBatch;
 
     private void loadTextures() {
-        backgroundTexture = new Texture("/home/mathias/Documents/Projects/Semester4/javashooter/Project/CurrencyObtainRight.png");
+        backgroundTexture = new Texture("/home/frederik/SE/4thSemester/project/javashooter/Project/CurrencyObtainRight.png");
         backgroundSprite =new Sprite(backgroundTexture);
         spriteBatch = new SpriteBatch();
     }

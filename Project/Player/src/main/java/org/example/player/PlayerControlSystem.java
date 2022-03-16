@@ -23,22 +23,6 @@ import org.openide.util.lookup.ServiceProviders;
 public class PlayerControlSystem implements IEntityProcessingService
 {
 
-    public static Texture backgroundTexture;
-    public static Sprite backgroundSprite;
-    private SpriteBatch spriteBatch;
-
-    private void loadTextures() {
-        backgroundTexture = new Texture("/home/mathias/Documents/Projects/Semester4/javashooter/Project/man.png");
-        backgroundSprite =new Sprite(backgroundTexture);
-        spriteBatch = new SpriteBatch();
-    }
-
-    public void renderBackground()
-    {
-
-        backgroundSprite.draw(spriteBatch);
-    }
-
     @Override
     public void process(GameData gameData, World world)
     {
@@ -64,8 +48,6 @@ public class PlayerControlSystem implements IEntityProcessingService
             positionPart.process(gameData, player);
             lifePart.process(gameData, player);
             updateShape(player);
-            loadTextures();
-            renderBackground();
         }
     }
 
