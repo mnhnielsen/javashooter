@@ -4,6 +4,8 @@ import com.badlogic.gdx.Input;
 import com.badlogic.gdx.InputAdapter;
 import org.example.common.data.GameData;
 import org.example.common.data.GameKeys;
+import org.example.common.data.GameData;
+
 
 public class GameInputProcessor extends InputAdapter
 {

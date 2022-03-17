@@ -21,6 +21,5 @@ public class Installer extends ModuleInstall
         cfg.resizable = false;
 
         new LwjglApplication(g, cfg);
-        System.out.println("Core module running");
     }
 }

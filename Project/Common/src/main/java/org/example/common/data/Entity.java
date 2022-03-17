@@ -1,6 +1,7 @@
 package org.example.common.data;
 
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.Sprite;
 import org.example.common.data.entityparts.EntityPart;
 
 import java.io.Serializable;
@@ -24,6 +25,10 @@ public class Entity
     {
         this.texture = texture;
     }
+    public void setSprite(Sprite sprite){
+        this.sprite = sprite;
+    }
+
 
     public Map<Class, EntityPart> getParts()
     {
@@ -36,6 +41,7 @@ public class Entity
     }
 
     private Texture texture;
+    private Sprite sprite;
     private float radius;
     private Map<Class, EntityPart> parts;
 

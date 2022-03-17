@@ -2,7 +2,6 @@ package org.example.core;
 
 import com.badlogic.gdx.ApplicationListener;
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
@@ -16,19 +15,11 @@ import org.example.common.services.IEntityProcessingService;
 import org.example.common.services.IGamePluginService;
 import org.example.common.services.IPlayerService;
 import org.example.common.services.IPostEntityProcessingService;
-import org.example.managers.AssetsJarFileResolver;
 import org.example.managers.GameInputProcessor;
-import org.example.managers.JarFileHandleStream;
 import org.openide.util.Lookup;
 import org.openide.util.LookupEvent;
 import org.openide.util.LookupListener;
 
-import java.io.File;
-import java.io.IOException;
-import java.net.URISyntaxException;
-import java.net.URL;
-
-import java.io.File;
 import java.util.Collection;
 import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
@@ -42,27 +33,31 @@ public class Game implements ApplicationListener
     private World world = new World();
     private List<IGamePluginService> gamePlugins = new CopyOnWriteArrayList<>();
     private Lookup.Result<IGamePluginService> result;
-    public static Texture backgroundTexture;
-    public static Sprite backgroundSprite;
+
+    public static Texture backgroundTexture, man;
+    public static Sprite backgroundSprite, manSprite;
     private SpriteBatch spriteBatch;
-    private static Sprite sprite;
 
 
     private void loadTextures()
     {
+        //Background config
         backgroundTexture = new Texture("/home/mathias/Documents/Projects/Semester4/javashooter/Project/CurrencyObtainRight.png");
-        sprite = new Sprite(new Texture("/home/mathias/Documents/Projects/Semester4/javashooter/Project/man.png"));
-
         backgroundSprite = new Sprite(backgroundTexture,Gdx.graphics.getWidth(),Gdx.graphics.getHeight());
+
         spriteBatch = new SpriteBatch();
+
+        //Player
+        for (IPlayerService playerService : getPlayerProcessingServices())
+            man = playerService.createTexture();
+        manSprite = new Sprite(man);
     }
 
-    public void renderBackground()
+    public void renderSprites()
     {
 
         backgroundSprite.draw(spriteBatch);
-        sprite.draw(spriteBatch);
-
+        manSprite.draw(spriteBatch);
     }
 
     @Override
@@ -81,6 +76,7 @@ public class Game implements ApplicationListener
 
         Gdx.input.setInputProcessor(new GameInputProcessor(gameData));
 
+
         result = lookup.lookupResult(IGamePluginService.class);
         result.addLookupListener(lookupListener);
         result.allItems();
@@ -90,7 +86,6 @@ public class Game implements ApplicationListener
             plugin.start(gameData, world);
             gamePlugins.add(plugin);
         }
-
     }
 
     private void update()
@@ -107,22 +102,19 @@ public class Game implements ApplicationListener
             postEntityProcessorService.process(gameData, world);
         }
 
-        for (IPlayerService playerService : getPlayerProcessingServices())
-        {
-            playerService.playerprocess(gameData, world);
-        }
     }
+
+
 
     @Override
     public void render()
     {
         // clear screen to black
-        //Gdx.gl.glClearColor(0, 0, 0, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
         Gdx.gl.glActiveTexture(GL20.GL_TEXTURE0);
 
         spriteBatch.begin();
-        renderBackground();
+        renderSprites();
         update();
         spriteBatch.end();
 
@@ -186,6 +178,7 @@ public class Game implements ApplicationListener
     {
         return lookup.lookupAll(IPlayerService.class);
     }
+
 
     private Collection<? extends IPostEntityProcessingService> getPostEntityProcessingServices()
     {

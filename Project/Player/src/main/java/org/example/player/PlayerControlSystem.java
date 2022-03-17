@@ -1,9 +1,6 @@
 package org.example.player;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.Sprite;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import org.example.common.data.Entity;
 import org.example.common.data.GameData;
 import org.example.common.data.GameKeys;
@@ -19,14 +16,15 @@ import org.openide.util.lookup.ServiceProvider;
 import org.openide.util.lookup.ServiceProviders;
 
 
-@ServiceProviders(value = {
-        @ServiceProvider(service = IEntityProcessingService.class)
+@ServiceProviders(value = {@ServiceProvider(service = IEntityProcessingService.class),
+        @ServiceProvider(service = IPlayerService.class)
 })
+
 public class PlayerControlSystem implements IEntityProcessingService, IPlayerService
 {
 
 
-
+    public static Texture man;
 
     @Override
     public void process(GameData gameData, World world)
@@ -51,21 +49,23 @@ public class PlayerControlSystem implements IEntityProcessingService, IPlayerSer
             movingPart.process(gameData, player);
             positionPart.process(gameData, player);
             lifePart.process(gameData, player);
-
+            //updateShape(player);
         }
     }
 
+
     @Override
-    public void playerprocess(GameData gameData, World world)
+    public Texture createTexture()
     {
-
-
+        man = new Texture("/home/mathias/Documents/Projects/Semester4/javashooter/Project/man.png");
+        return man;
     }
+
 
     private void updateShape(Entity entity)
     {
 
-        /*float[] shapex = new float[4];
+        float[] shapex = new float[4];
         float[] shapey = new float[4];
         PositionPart positionPart = entity.getPart(PositionPart.class);
         float x = positionPart.getX();
@@ -87,10 +87,8 @@ public class PlayerControlSystem implements IEntityProcessingService, IPlayerSer
         entity.setShapeX(shapex);
         entity.setShapeY(shapey);
 
-         */
-
-
-
 
     }
+
+
 }
