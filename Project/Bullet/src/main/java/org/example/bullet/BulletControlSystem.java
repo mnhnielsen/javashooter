@@ -12,6 +12,8 @@ import org.example.commonbullet.BulletSPI;
 import org.openide.util.lookup.ServiceProvider;
 import org.openide.util.lookup.ServiceProviders;
 
+import java.util.List;
+
 import static java.lang.Math.cos;
 import static java.lang.Math.sin;
 
@@ -38,6 +40,12 @@ public class BulletControlSystem implements IEntityProcessingService, BulletSPI
 
             setShape(bullet);
         }
+    }
+
+    @Override
+    public List<String> getAssetResources()
+    {
+        return null;
     }
 
     @Override

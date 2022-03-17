@@ -2,6 +2,7 @@ package org.example.core;
 
 import com.badlogic.gdx.ApplicationListener;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
@@ -15,6 +16,7 @@ import org.example.common.services.IEntityProcessingService;
 import org.example.common.services.IGamePluginService;
 import org.example.common.services.IPlayerService;
 import org.example.common.services.IPostEntityProcessingService;
+import org.example.managers.AssetsJarFileResolver;
 import org.example.managers.GameInputProcessor;
 import org.openide.util.Lookup;
 import org.openide.util.LookupEvent;
@@ -37,7 +39,8 @@ public class Game implements ApplicationListener
     public static Texture backgroundTexture, man;
     public static Sprite backgroundSprite, manSprite;
     private SpriteBatch spriteBatch;
-
+    AssetsJarFileResolver jfhr = new AssetsJarFileResolver();
+    AssetManager am = new AssetManager(jfhr);
 
     private void loadTextures()
     {
@@ -48,10 +51,17 @@ public class Game implements ApplicationListener
         spriteBatch = new SpriteBatch();
 
         //Player
-        for (IPlayerService playerService : getPlayerProcessingServices())
-            man = playerService.createTexture();
+        for (IEntityProcessingService service : getEntityProcessingServices())
+            for (String assetUrl : service.getAssetResources()){
+                am.load(assetUrl, Texture.class);
+                am.finishLoading();
+
+                man = am.get(assetUrl, Texture.class);
+            }
         manSprite = new Sprite(man);
     }
+
+
 
     public void renderSprites()
     {
@@ -174,7 +184,7 @@ public class Game implements ApplicationListener
         return lookup.lookupAll(IEntityProcessingService.class);
     }
 
-    private Collection<? extends IPlayerService> getPlayerProcessingServices()
+    private Collection<? extends IPlayerService> getPlayerServices()
     {
         return lookup.lookupAll(IPlayerService.class);
     }

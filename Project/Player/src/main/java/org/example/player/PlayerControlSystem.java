@@ -1,5 +1,6 @@
 package org.example.player;
 
+import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.graphics.Texture;
 import org.example.common.data.Entity;
 import org.example.common.data.GameData;
@@ -11,16 +12,20 @@ import org.example.common.data.entityparts.PositionPart;
 import org.example.common.services.IEntityProcessingService;
 import org.example.common.services.IPlayerService;
 import org.example.commonbullet.BulletSPI;
+import org.example.managers.AssetsJarFileResolver;
 import org.openide.util.Lookup;
 import org.openide.util.lookup.ServiceProvider;
 import org.openide.util.lookup.ServiceProviders;
 
+import java.io.File;
+import java.util.ArrayList;
+import java.util.List;
 
-@ServiceProviders(value = {@ServiceProvider(service = IEntityProcessingService.class),
-        @ServiceProvider(service = IPlayerService.class)
+
+@ServiceProviders(value = {@ServiceProvider(service = IEntityProcessingService.class)
 })
 
-public class PlayerControlSystem implements IEntityProcessingService, IPlayerService
+public class PlayerControlSystem implements IEntityProcessingService
 {
 
 
@@ -53,13 +58,18 @@ public class PlayerControlSystem implements IEntityProcessingService, IPlayerSer
         }
     }
 
-
     @Override
-    public Texture createTexture()
+    public List<String> getAssetResources()
     {
-        man = new Texture("/home/mathias/Documents/Projects/Semester4/javashooter/Project/man.png");
-        return man;
+        String jarUrl = this.getClass().getResource("").getPath() +
+               "Ship.png";
+
+        String s = "/home/mathias/Documents/Projects/Semester4/javashooter/Project/application/target/project/project/modules/org-example-Player.jar!/org/example/player/Ship.png";
+        List<String> list = new ArrayList<>();
+        list.add(s);
+        return list;
     }
+
 
 
     private void updateShape(Entity entity)
