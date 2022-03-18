@@ -12,6 +12,7 @@ import org.example.commonbullet.BulletSPI;
 import org.openide.util.lookup.ServiceProvider;
 import org.openide.util.lookup.ServiceProviders;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import static java.lang.Math.cos;
@@ -45,7 +46,13 @@ public class BulletControlSystem implements IEntityProcessingService, BulletSPI
     @Override
     public List<String> getAssetResources()
     {
-        return null;
+        String jarUrl = this.getClass().getResource("").getPath() +
+                "Ship.png";
+
+        String s = "/home/mathias/Documents/Projects/Semester4/javashooter/Project/application/target/project/project/modules/org-example-Player.jar!/org/example/player/Ship.png";
+        List<String> list = new ArrayList<>();
+        list.add(s);
+        return list;
     }
 
     @Override

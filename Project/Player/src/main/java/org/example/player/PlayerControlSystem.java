@@ -54,22 +54,28 @@ public class PlayerControlSystem implements IEntityProcessingService
             movingPart.process(gameData, player);
             positionPart.process(gameData, player);
             lifePart.process(gameData, player);
-            //updateShape(player);
+            updateShape(player);
+            setShape(player);
         }
     }
 
     @Override
     public List<String> getAssetResources()
     {
-        String jarUrl = this.getClass().getResource("").getPath() +
-               "Ship.png";
+        String jarUrl = this.getClass().getResource("") +
+                "Ship.png";
 
+        System.out.println(jarUrl);
         String s = "/home/mathias/Documents/Projects/Semester4/javashooter/Project/application/target/project/project/modules/org-example-Player.jar!/org/example/player/Ship.png";
         List<String> list = new ArrayList<>();
         list.add(s);
         return list;
     }
 
+    private void setShape(Entity entity)
+    {
+
+    }
 
 
     private void updateShape(Entity entity)
